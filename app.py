@@ -60,7 +60,7 @@ def _get_file_path(folder: Path, stem: str):
 
 def ask_gemini_for_similar_word(keyword: str, candidates: list):
     try:
-        model = genai.GenerativeModel("gemini-1.5-flash")
+        model = genai.GenerativeModel("gemini-2.0-flash")
         prompt = (
             f"다음 단어와 의미가 가장 비슷한 단어를 아래 목록에서 딱 하나만 골라줘.\n"
             f"반드시 목록에 있는 단어 그대로만 답해줘. 설명이나 다른 말은 절대 하지 마.\n\n"
@@ -85,7 +85,7 @@ def extract_keywords_from_image(uploaded_file) -> dict:
         "mime_type": uploaded_file.type,
         "data": image_bytes
     }
-    model = genai.GenerativeModel("gemini-1.5-flash")
+    model = genai.GenerativeModel("gemini-2.0-flash")
     prompt = (
         "이 사진을 보고 가장 중요한 행동을 한 단어씩 추출해줘.\n"
         "반드시 아래 형식으로만 답해줘. 다른 말은 절대 하지 마:\n\n"
@@ -97,7 +97,7 @@ def extract_keywords_from_image(uploaded_file) -> dict:
     return parse_keywords(response.text)
 
 def extract_keywords_from_text(user_text: str) -> dict:
-    model = genai.GenerativeModel("gemini-1.5-flash")
+    model = genai.GenerativeModel("gemini-2.0-flash")
     prompt = (
         f"다음 문장에서 가장 중요한 행동을 한 단어씩 추출해줘.\n"
         f"반드시 아래 형식으로만 답해줘. 다른 말은 절대 하지 마:\n\n"
@@ -118,7 +118,7 @@ def parse_keywords(text: str) -> dict:
     return result
 
 def generate_diary_sentence(subject: str, obj: str, verb: str) -> str:
-    model = genai.GenerativeModel("gemini-1.5-flash")
+    model = genai.GenerativeModel("gemini-2.0-flash")
     prompt = (
         f"AAC 사용자를 위한 따뜻하고 짧은 일기 문장 2개를 만들어줘.\n"
         f"초등학교 1학년도 이해할 수 있을 만큼 쉽고 단순하게 써줘.\n"
@@ -288,4 +288,5 @@ if keywords:
     if st.button("🔄 다시 하기", use_container_width=True):
         if "keywords" in st.session_state:
             del st.session_state["keywords"]
+
         st.rerun()
